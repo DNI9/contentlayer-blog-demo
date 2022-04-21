@@ -1,9 +1,12 @@
 import {allPosts, Post} from 'contentlayer/generated';
 import {format, parseISO} from 'date-fns';
 import {GetStaticPropsContext} from 'next';
+import {useMDXComponent} from 'next-contentlayer/hooks';
 import Head from 'next/head';
 
 const PostLayout = ({post}: {post: Post}) => {
+  const MDXContent = useMDXComponent(post.body.code);
+
   return (
     <>
       <Head>
@@ -16,7 +19,7 @@ const PostLayout = ({post}: {post: Post}) => {
           </time>
           <h1>{post.title}</h1>
         </div>
-        <div dangerouslySetInnerHTML={{__html: post.body.html}} />
+        <MDXContent />
       </article>
     </>
   );
